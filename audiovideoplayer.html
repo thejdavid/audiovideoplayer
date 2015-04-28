@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <video id="testvideoplayer">
+  <video id="testvideoplayer" ontimeupdate="update(this)" onloadeddata="settime(this)">
     <source src="http://techslides.com/demos/sample-videos/small.mp4"></source>
   </video>
   <button class="control" onclick="play('testvideoplayer', this)">Play</button>
@@ -21,6 +21,16 @@
 </p>
 <div id="slider-range-max"></div>
 </body>
+
+
+  <p>
+  <label for="progression">progression:</label>
+  <input type="text" id="progression" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="slider-progression"></div>
+</body>
+
+
 <script>
 function play(idPlayer, control) {
  var player = $( '#' + idPlayer)[0];
@@ -51,5 +61,35 @@ $(function() {
   });
   $( "#volume" ).val( $( "#slider-range-max" ).slider( "value" ) );
 });
+
+$(function() {
+  var player = $( '#testvideoplayer')[0];
+  $( "#slider-progression" ).slider({
+    range: "max",
+    min: 0,
+    max: 0,
+    value: 0,
+    slide: function( event, ui ) {
+      $( "#progression" ).val( ui.value );
+      player.currentTime = ui.value
+    }
+  });
+});
+
+function update(video) {
+  var player = $( '#testvideoplayer')[0];
+  $( "#progression" ).val( player.currentTime );
+  $( "#slider-progression" ).slider('value',player.currentTime);
+};
+
+function settime(video) {
+  var player = $( '#testvideoplayer')[0];
+  console.log(player.duration)
+    $( "#slider-progression" ).slider({
+    range: "max",
+    min: 0,
+    max: player.duration
+  });
+};
 </script>
 </html>

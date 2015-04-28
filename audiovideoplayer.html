@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+</head>
+
+<body>
+  <video id="testvideoplayer">
+    <source src="http://techslides.com/demos/sample-videos/small.mp4"></source>
+  </video>
+  <button class="control" onclick="play('testvideoplayer', this)">Play</button>
+  <button class="control" onclick="resume('testvideoplayer')">Stop</button>
+  <p>
+  <label for="amount">Maximum price:</label>
+  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="slider-range-max"></div>
+</body>
+<script>
+function play(idPlayer, control) {
+ var player = $( '#' + idPlayer)[0];
+    if (player.paused) {
+        player.play();
+        control.textContent = 'Pause';
+    } else {
+        player.pause(); 
+        control.textContent = 'Play';
+    }
+}
+function resume(idPlayer) {
+  var player = $( '#' + idPlayer)[0];
+  player.currentTime = 0;
+  player.pause();
+}
+  $(function() {
+    $( "#slider-range-max" ).slider({
+      range: "max",
+      min: 1,
+      max: 10,
+      value: 2,
+      slide: function( event, ui ) {
+        $( "#amount" ).val( ui.value );
+      }
+    });
+    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+  });
+</script>
+</html>

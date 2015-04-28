@@ -16,8 +16,8 @@
   <button class="control" onclick="play('testvideoplayer', this)">Play</button>
   <button class="control" onclick="resume('testvideoplayer')">Stop</button>
   <p>
-  <label for="amount">Maximum price:</label>
-  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+  <label for="volume">Volume:</label>
+  <input type="text" id="volume" readonly style="border:0; color:#f6931f; font-weight:bold;">
 </p>
 <div id="slider-range-max"></div>
 </body>
@@ -28,7 +28,7 @@ function play(idPlayer, control) {
         player.play();
         control.textContent = 'Pause';
     } else {
-        player.pause(); 
+        player.pause();
         control.textContent = 'Play';
     }
 }
@@ -37,17 +37,19 @@ function resume(idPlayer) {
   player.currentTime = 0;
   player.pause();
 }
-  $(function() {
-    $( "#slider-range-max" ).slider({
-      range: "max",
-      min: 1,
-      max: 10,
-      value: 2,
-      slide: function( event, ui ) {
-        $( "#amount" ).val( ui.value );
-      }
-    });
-    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+$(function() {
+  var player = $( '#testvideoplayer')[0];
+  $( "#slider-range-max" ).slider({
+    range: "max",
+    min: 0,
+    max: 10,
+    value: 0,
+    slide: function( event, ui ) {
+      $( "#volume" ).val( ui.value );
+      player.volume = ui.value/10
+    }
   });
+  $( "#volume" ).val( $( "#slider-range-max" ).slider( "value" ) );
+});
 </script>
 </html>
